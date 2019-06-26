@@ -1,0 +1,8 @@
+name: ElytraBalance
+version: 1.1
+authors: [Nyaruko]
+load: postworld
+prefix: EB
+main: io.nyaruko.elytrabalance.ElytraBalance
+
+depend: []
