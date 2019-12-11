@@ -20,12 +20,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class ElytraBalance extends JavaPlugin {
     private static Config config;
 
+    final String version = "1.2.1";
+    //Update this whenever the config is altered
+    final int configVersion = 2;
+
     @Override
     public void onEnable() {
         initConfig();
         registerEvents();
 
-        final String version = "1.2";
         if (isEnabled()) {
             getLogger().info("ElytraBalance v" + version + " successfully loaded.");
         } else {
@@ -40,17 +43,30 @@ public class ElytraBalance extends JavaPlugin {
             this.setEnabled(false);
         }
 
-        //Ensure config file exists
         File configFile = new File(getDataFolder() + "/config.json");
-        if(!configFile.exists()) {
+
+        if(configFile.exists()) {
+            //Load config if one exists
+            try(Reader reader = new FileReader(configFile)){
+                config = new Gson().fromJson(reader, Config.class);
+            } catch (IOException e) {
+                getLogger().log(Level.SEVERE, e.getMessage());
+                this.setEnabled(false);
+                return;
+            }
+
+            //Update config to latest version
+            //Re-saves the config file as the latest version but with existing user values
+            if (config.configVersion < configVersion) {
+                config.configVersion = configVersion;
+                saveConfig(configFile);
+            }
+        } else {
+            //Create config file if not exists
             try {
                 if(configFile.createNewFile()) {
-                    config = new Config();
-                    try (Writer writer = Files.newBufferedWriter(configFile.toPath())) {
-                        Gson file = new GsonBuilder().setPrettyPrinting().create();
-                        file.toJson(config, writer);
-                        return;
-                    }
+                    config = new Config(configVersion);
+                    saveConfig(configFile);
                 } else {
                     getLogger().log(Level.SEVERE, "Failed to create plugin config.");
                     this.setEnabled(false);
@@ -60,12 +76,14 @@ public class ElytraBalance extends JavaPlugin {
                 this.setEnabled(false);
             }
         }
+    }
 
-        //Load config if one exists
-        try(Reader reader = new FileReader(getDataFolder() + "/config.json")){
-            config = new Gson().fromJson(reader, Config.class);
+    private void saveConfig(File configFile) {
+        try (Writer writer = Files.newBufferedWriter(configFile.toPath())) {
+            Gson file = new GsonBuilder().setPrettyPrinting().create();
+            file.toJson(config, writer);
         } catch (IOException e) {
-            getLogger().log(Level.SEVERE, e.getMessage());
+            getLogger().log(Level.SEVERE, "Failed to save plugin config.");
             this.setEnabled(false);
         }
     }

@@ -10,6 +10,8 @@ import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerItemMendEvent;
 
 public class FixListener implements Listener {
+
+    //Repair
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onFix(PrepareAnvilEvent event) {
         Player p = (Player) event.getView().getPlayer();
@@ -19,9 +21,11 @@ public class FixListener implements Listener {
         }
     }
 
+    //Mend (Enchantment)
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onFix(PlayerItemMendEvent event) {
-        if(event.getItem().getType() == Material.ELYTRA) {
+        Player p = event.getPlayer();
+        if((event.getItem().getType() == Material.ELYTRA) && (!ElytraBalance.getConfigModel().canMendElytra) && (!p.hasPermission("elytrabalance.overrides.mend"))){
             event.setRepairAmount(0);
         }
     }
