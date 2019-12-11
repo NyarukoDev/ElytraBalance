@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerItemMendEvent;
 
 public class FixListener implements Listener {
 
-    //Repair
+    //Repair (Anvil)
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onFix(PrepareAnvilEvent event) {
         Player p = (Player) event.getView().getPlayer();

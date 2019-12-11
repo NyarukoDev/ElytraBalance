@@ -30,6 +30,6 @@ Each of the changes (with the current exception of firework star rocket damage) 
   "additionalDamagePerStarRocketUse": 0.0,
   "canConsumeFoodInFlight": true,
   "canRepairElytra": true
-  "canMenElytra": true
+  "canMendElytra": true
 }
 ```
