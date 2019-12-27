@@ -38,7 +38,7 @@ public class ElytraBalance extends JavaPlugin {
 
     private void initConfig() {
         //Ensure plugin data folder exists
-        if(!getDataFolder().exists() && !getDataFolder().mkdir()) {
+        if (!getDataFolder().exists() && !getDataFolder().mkdir()) {
             getLogger().log(Level.SEVERE, "Failed to create data folder.");
             this.setEnabled(false);
         }
@@ -47,7 +47,7 @@ public class ElytraBalance extends JavaPlugin {
 
         if(configFile.exists()) {
             //Load config if one exists
-            try(Reader reader = new FileReader(configFile)){
+            try (Reader reader = new FileReader(configFile)){
                 config = new Gson().fromJson(reader, Config.class);
             } catch (IOException e) {
                 getLogger().log(Level.SEVERE, e.getMessage());
@@ -64,7 +64,7 @@ public class ElytraBalance extends JavaPlugin {
         } else {
             //Create config file if not exists
             try {
-                if(configFile.createNewFile()) {
+                if (configFile.createNewFile()) {
                     config = new Config(configVersion);
                     saveConfig(configFile);
                 } else {
