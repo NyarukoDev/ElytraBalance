@@ -13,6 +13,7 @@ Each of the changes (with the current exception of firework star rocket damage) 
 
 ## Permissions:
 * `elytrabalance.overrides.itemdamage`
+* `elytrabalance.overrides.boostplayerdamage`
 * `elytrabalance.overrides.breakremoval`
 * `elytrabalance.overrides.eat`
 * `elytrabalance.overrides.fix`

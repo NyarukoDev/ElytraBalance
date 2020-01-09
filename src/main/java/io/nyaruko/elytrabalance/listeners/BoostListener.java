@@ -10,32 +10,37 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class BoostListener implements Listener {
+    /**
+     * Listener for elytra boost events (playerDamageOnNoStarRocketUse)
+     * Player damage amounts defined with additionalDamagePerStarRocketUse & damagePerNoStarRocketUse
+     * Elytra ItemStack damage defined with itemDamageOnRocketUse
+     */
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBoost(PlayerInteractEvent event) {
         Player p = event.getPlayer();
-        if (p.isGliding()) {
-            ItemStack is = event.getItem();
-            if ((is != null) && (is.getType() == Material.FIREWORK_ROCKET)) {
-                if (((FireworkMeta) is.getItemMeta()).hasEffects()) {
-                    p.damage(ElytraBalance.getConfigModel().additionalDamagePerStarRocketUse);
-                } else if (ElytraBalance.getConfigModel().playerDamageOnNoStarRocketUse) {
-                    p.damage(ElytraBalance.getConfigModel().damagePerNoStarRocketUse);
-                }
-                if (!p.hasPermission("elytrabalance.overrides.itemdamage")) {
-                    ItemStack elytra = p.getInventory().getChestplate();
-                    if(elytra != null) {
-                        ItemMeta meta = elytra.getItemMeta();
-                        if(meta != null) {
-                            int durability = ((Damageable) meta).getDamage() + ElytraBalance.getConfigModel().itemDamageOnRocketUse;
-                            if (durability > 431) {
-                                durability = 431;
-                            }
-                            ((Damageable) meta).setDamage(durability);
-                        }
-                    }
+        ItemStack heldItem = event.getItem();
+        if(!p.isGliding() || heldItem == null || heldItem.getType() != Material.FIREWORK_ROCKET) return;
+
+        //Should deal player damage checks
+        if(!p.hasPermission("elytrabalance.overrides.boostplayerdamage")) {
+            if(((FireworkMeta) heldItem.getItemMeta()).hasEffects()) {
+                p.damage(ElytraBalance.getConfigModel().additionalDamagePerStarRocketUse);
+            } else if(ElytraBalance.getConfigModel().playerDamageOnNoStarRocketUse) {
+                p.damage(ElytraBalance.getConfigModel().damagePerNoStarRocketUse);
+            }
+        }
+
+        //Should damage elytra checks
+        if(!p.hasPermission("elytrabalance.overrides.itemdamage")) {
+            ItemStack elytra = p.getInventory().getChestplate();
+            if(elytra != null) {
+                Damageable m = (Damageable) elytra.getItemMeta();
+                if(m != null) {
+                    int durability = m.getDamage() + ElytraBalance.getConfigModel().itemDamageOnRocketUse;
+                    durability = Math.min(durability, 431);
+                    m.setDamage(durability);
                 }
             }
         }

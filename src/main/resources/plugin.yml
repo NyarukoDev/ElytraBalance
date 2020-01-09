@@ -1,7 +1,7 @@
 name: ElytraBalance
-version: 1.1
+version: 1.2.1
 authors: [Nyaruko]
-load: postworld
+load: POSTWORLD
 prefix: EB
 main: io.nyaruko.elytrabalance.ElytraBalance
 

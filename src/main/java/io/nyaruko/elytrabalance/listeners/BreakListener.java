@@ -11,20 +11,22 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class BreakListener implements Listener {
+    /**
+     * Remove on break listener (removeElytraOnBreak)
+     */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBreak(PlayerItemDamageEvent event) {
         Player p = event.getPlayer();
         ItemStack is = p.getInventory().getChestplate();
-        if (is != null) {
-            ItemMeta im = is.getItemMeta();
-            if(im != null) {
-                int durability = ((Damageable) im).getDamage();
-                if(is.getType() == Material.ELYTRA && !p.hasPermission("elytrabalance.overrides.breakremoval") && durability >= 430) {
-                    ItemStack replacement = new ItemStack(Material.AIR);
-                    p.getInventory().setChestplate(replacement);
-                    event.setCancelled(true);
-                }
-            }
+        ItemMeta im;
+
+        if(is == null || (im = is.getItemMeta()) == null) return;
+
+        int durability = ((Damageable) im).getDamage();
+        if(is.getType() == Material.ELYTRA && !p.hasPermission("elytrabalance.overrides.breakremoval") && durability >= 430) {
+            ItemStack replacement = new ItemStack(Material.AIR);
+            p.getInventory().setChestplate(replacement);
+            event.setCancelled(true);
         }
     }
 }
