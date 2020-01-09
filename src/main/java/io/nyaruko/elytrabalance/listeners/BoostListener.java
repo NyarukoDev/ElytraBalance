@@ -6,10 +6,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class BoostListener implements Listener {
     /**
@@ -21,7 +23,7 @@ public class BoostListener implements Listener {
     public void onBoost(PlayerInteractEvent event) {
         Player p = event.getPlayer();
         ItemStack heldItem = event.getItem();
-        if(!p.isGliding() || heldItem == null || heldItem.getType() != Material.FIREWORK_ROCKET) return;
+        if(!p.isGliding() || heldItem == null || event.getAction() != Action.RIGHT_CLICK_AIR || heldItem.getType() != Material.FIREWORK_ROCKET) return;
 
         //Should deal player damage checks
         if(!p.hasPermission("elytrabalance.overrides.boostplayerdamage")) {
@@ -41,6 +43,7 @@ public class BoostListener implements Listener {
                     int durability = m.getDamage() + ElytraBalance.getConfigModel().itemDamageOnRocketUse;
                     durability = Math.min(durability, 431);
                     m.setDamage(durability);
+                    elytra.setItemMeta((ItemMeta) m);
                 }
             }
         }

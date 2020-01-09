@@ -4,5 +4,6 @@ authors: [Nyaruko]
 load: POSTWORLD
 prefix: EB
 main: io.nyaruko.elytrabalance.ElytraBalance
+api-version: 1.13
 
 depend: []

@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerItemMendEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class FixListener implements Listener {
     /**
@@ -16,7 +17,14 @@ public class FixListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onFix(PrepareAnvilEvent event) {
         Player p = (Player) event.getView().getPlayer();
-        if(event.getResult() != null && event.getResult().getType() == Material.ELYTRA && !ElytraBalance.getConfigModel().canRepairElytra && !p.hasPermission("elytrabalance.overrides.fix")) {
+        ItemStack rightSide = event.getInventory().getContents()[1];//Right hand slot of anvil
+
+        if (event.getResult() != null &&
+            event.getResult().getType() == Material.ELYTRA &&
+            rightSide != null &&
+            rightSide.getType() == Material.PHANTOM_MEMBRANE && //Allows users to still enchant elytras
+            !ElytraBalance.getConfigModel().canRepairElytra &&
+            !p.hasPermission("elytrabalance.overrides.fix")) {
             event.setResult(null);
             p.updateInventory();
         }
