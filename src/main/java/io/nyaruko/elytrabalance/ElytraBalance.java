@@ -22,7 +22,7 @@ public class ElytraBalance extends JavaPlugin {
      * Update this whenever the config is altered
      */
     private static final int CONFIG_VERSION = 2;
-    private static final String VERSION = "1.2.1";
+    private static final String VERSION = "1.2.2";
     private static Config config;
 
     @Override
