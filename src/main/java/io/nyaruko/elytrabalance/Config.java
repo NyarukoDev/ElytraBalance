@@ -1,6 +1,10 @@
 package io.nyaruko.elytrabalance;
 
+//ConfigVersion 2
+
 public class Config {
+    //Default to '1' in case of pre-versioning config
+    public int configVersion = 1;
     public boolean removeElytraOnBreak = false;
     public int itemDamageOnRocketUse = 57;
     public boolean playerDamageOnNoStarRocketUse = true;
@@ -10,4 +14,9 @@ public class Config {
     public double additionalDamagePerStarRocketUse = 0.0D;
     public boolean canConsumeFoodInFlight = true;
     public boolean canRepairElytra = true;
+    public boolean canMendElytra = true;
+
+    public Config(int configVersion) {
+        this.configVersion = configVersion;
+    }
 }
