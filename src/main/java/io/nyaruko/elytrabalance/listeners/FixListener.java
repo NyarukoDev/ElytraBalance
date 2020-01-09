@@ -27,6 +27,8 @@ public class FixListener implements Listener {
             !p.hasPermission("elytrabalance.overrides.fix")) {
             event.setResult(null);
             p.updateInventory();
+            if(ElytraBalance.getConfigModel().showRepairAttemptBlockedMessage)
+                ElytraBalance.sendConfigMessage(p, ElytraBalance.getConfigModel().repairAttemptBlockedMessage);
         }
     }
 

@@ -1,5 +1,6 @@
 package io.nyaruko.elytrabalance.listeners;
 
+import io.nyaruko.elytrabalance.ElytraBalance;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,6 +16,9 @@ public class EatListener implements Listener {
         Player p = event.getPlayer();
         if(p.isGliding() && !p.isSwimming() && !p.hasPermission("elytrabalance.overrides.eat")) {
             event.setCancelled(true);
+
+            if(ElytraBalance.getConfigModel().showConsumableBlockedMessage)
+                ElytraBalance.sendConfigMessage(event.getPlayer(), ElytraBalance.getConfigModel().consumableBlockedMessage);
         }
     }
 }

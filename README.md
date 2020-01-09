@@ -9,7 +9,9 @@ Each of the changes (with the current exception of firework star rocket damage) 
 * Configure how much damage players take when using rockets with and without firework stars
 * Decide if players should be able to use consumable items when gliding (food, potions etc.)
 * Decide if the elytra should disappear when it breaks like normal tools
-* Decide if the elytra should be repairable in an anvil or by the mending enchantment
+* Decide if the elytra should be repairable in an anvil
+* Decide if the elytra should be repairable by the mending enchantment
+* Decide if using riptide during gliding should stop the player's flight
 
 ## Permissions:
 * `elytrabalance.overrides.itemdamage`
@@ -18,6 +20,7 @@ Each of the changes (with the current exception of firework star rocket damage) 
 * `elytrabalance.overrides.eat`
 * `elytrabalance.overrides.fix`
 * `elytrabalance.overrides.mend`
+* `elytrabalance.overrides.riptide`
 
 ## Configuration:
 ```
@@ -30,7 +33,17 @@ Each of the changes (with the current exception of firework star rocket damage) 
   "Star": "Additional damage dealt to a player when they boost with a rocket that is equipped with a firework star on top of the default 2 and a half hearts.",
   "additionalDamagePerStarRocketUse": 0.0,
   "canConsumeFoodInFlight": true,
-  "canRepairElytra": true
-  "canMendElytra": true
+  "canRepairElytra": true,
+  "canMendElytra": true,
+  "riptideInterruptsGliding": false;
+
+  "consumableBlockedMessage": "You can't eat/drink while gliding!",
+  "showConsumableBlockedMessage": true,
+  "elytraDestroyedAndRemovedMessage": "Your elytra has shattered into a million pieces!",
+  "showElytraDestroyedAndRemovedMessage": false,
+  "repairAttemptBlockedMessage": "You can't fix an elytra with an anvil!",
+  "showRepairAttemptBlockedMessage": true,
+  "riptideInterruptMessage": "Riptide has stopped you gliding!",
+  "showRiptideInterruptMessage": true
 }
 ```

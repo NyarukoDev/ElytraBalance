@@ -15,6 +15,16 @@ public class Config {
     public boolean canConsumeFoodInFlight = true;
     public boolean canRepairElytra = true;
     public boolean canMendElytra = true;
+    public boolean riptideInterruptsGliding = false;
+
+    public String consumableBlockedMessage = "You can't eat/drink while gliding!";
+    public boolean showConsumableBlockedMessage = true;
+    public String elytraDestroyedAndRemovedMessage = "Your elytra has shattered into a million pieces!";
+    public boolean showElytraDestroyedAndRemovedMessage = false;
+    public String repairAttemptBlockedMessage = "You can't fix an elytra with an anvil!";
+    public boolean showRepairAttemptBlockedMessage = true;
+    public String riptideInterruptMessage = "Riptide has stopped you gliding!";
+    public boolean showRiptideInterruptMessage = true;
 
     public Config(int configVersion) {
         this.configVersion = configVersion;

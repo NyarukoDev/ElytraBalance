@@ -1,5 +1,6 @@
 package io.nyaruko.elytrabalance.listeners;
 
+import io.nyaruko.elytrabalance.ElytraBalance;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,9 +25,11 @@ public class BreakListener implements Listener {
 
         int durability = ((Damageable) im).getDamage();
         if(is.getType() == Material.ELYTRA && !p.hasPermission("elytrabalance.overrides.breakremoval") && durability >= 430) {
-            ItemStack replacement = new ItemStack(Material.AIR);
-            p.getInventory().setChestplate(replacement);
+            p.getInventory().setChestplate(new ItemStack(Material.AIR));
             event.setCancelled(true);
+
+            if(ElytraBalance.getConfigModel().showElytraDestroyedAndRemovedMessage)
+                ElytraBalance.sendConfigMessage(event.getPlayer(), ElytraBalance.getConfigModel().elytraDestroyedAndRemovedMessage);
         }
     }
 }

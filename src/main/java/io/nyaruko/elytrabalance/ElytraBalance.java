@@ -15,14 +15,16 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.util.logging.Level;
 
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ElytraBalance extends JavaPlugin {
     /**
      * Update this whenever the config is altered
      */
-    private static final int CONFIG_VERSION = 2;
-    private static final String VERSION = "1.2.2";
+    private static final int CONFIG_VERSION = 3;
+    private static final String VERSION = "1.3.0";
     private static Config config;
 
     @Override
@@ -31,9 +33,9 @@ public class ElytraBalance extends JavaPlugin {
         registerEvents();
 
         if(isEnabled()) {
-            getLogger().log(Level.INFO, "ElytraBalance v{} successfully loaded.", VERSION);
+            getLogger().log(Level.INFO, "ElytraBalance v{0} successfully loaded.", VERSION);
         } else {
-            getLogger().log(Level.SEVERE, "ElytraBalance v{} failed to load.", VERSION);
+            getLogger().log(Level.SEVERE, "ElytraBalance v{0} failed to load.", VERSION);
         }
     }
 
@@ -85,7 +87,7 @@ public class ElytraBalance extends JavaPlugin {
             Gson file = new GsonBuilder().setPrettyPrinting().create();
             file.toJson(config, writer);
         } catch (IOException e) {
-            getLogger().log(Level.SEVERE, "Failed to save plugin config: {}", e.getMessage());
+            getLogger().log(Level.SEVERE, "Failed to save plugin config: {0}", e.getMessage());
             this.setEnabled(false);
         }
     }
@@ -99,6 +101,10 @@ public class ElytraBalance extends JavaPlugin {
         }
         getServer().getPluginManager().registerEvents(new BoostListener(), this);
         getServer().getPluginManager().registerEvents(new FixListener(), this);
+    }
+
+    public static void sendConfigMessage(Player player, String configMessage) {
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', configMessage));
     }
 
     public static Config getConfigModel() {
